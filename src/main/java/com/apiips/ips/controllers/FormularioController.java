@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/formulario")
 public class FormularioController {
