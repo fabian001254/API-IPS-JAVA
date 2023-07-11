@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "paciente": {
+      "type": "object",
+      "properties": {
+        "Cedula": {
+          "type": "integer"
+        },
+        "Nombre": {
+          "type": "string"
+        },
+        "Apellido": {
+          "type": "string"
+        },
+        "Fecha de nacimiento": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Telefono": {
+          "type": "string"
+        }
+      }
+    },
+    "medico": {
+      "type": "object",
+      "properties": {
+        "Tarjeta Profesional": {
+          "type": "integer"
+        },
+        "Nombre": {
+          "type": "string"
+        },
+        "Apellido": {
+          "type": "string"
+        },
+        "Consultorio": {
+          "type": "string"
+        },
+        "Correo": {
+          "type": "string"
+        },
+        "Especialidad": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Especialidad"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "cita": {
+      "type": "object",
+      "properties": {
+        "Fecha": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Cedula Paciente": {
+          "type": "integer"
+        },
+        "Tarjeta Profesional": {
+          "type": "integer"
+        }
+      }
+    },
+    "especialidad": {
+      "type": "object",
+      "properties": {
+        "Nombre": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "paciente": {
+      "$ref": "#/definitions/Paciente"
+    },
+    "medico": {
+      "$ref": "#/definitions/Medico"
+    },
+    "cita": {
+      "$ref": "#/definitions/Cita"
+    },
+    "especialidad": {
+      "$ref": "#/definitions/Especialidad"
+    }
+  }
+}
