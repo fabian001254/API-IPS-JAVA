@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.apiips.ips.Errors.ErrorResponse;
 import com.apiips.ips.models.PacienteModel;
 import com.apiips.ips.repositories.PacienteRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class PacienteSevice {
@@ -24,7 +25,7 @@ public class PacienteSevice {
         PacienteModel paciente =  pacienteRepository.findByCedula(cedula);
         if(paciente == null){
             ErrorResponse errorResponse = new ErrorResponse("No se encontró ningún paciente con la cédula especificada");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            return ResponseEntity.status(400)
                                  .body(errorResponse);
         }
         return ResponseEntity.ok(paciente);
@@ -32,22 +33,21 @@ public class PacienteSevice {
 
 
     public PacienteModel guardarPaciente(PacienteModel pacienteModel) {
-
-        if (!pacienteModel.getNombre().matches("[a-zA-Z]+") || !pacienteModel.getApellido().matches("[a-zA-Z]+") ) {
+        if (!pacienteModel.getNombre().matches("[a-zA-Z]+") || !pacienteModel.getApellido().matches("[a-zA-Z]+")) {
             throw new IllegalArgumentException("El nombre y/o apellido solo debe contener letras");
         }
-        
-        //TO-DO: REVISAR PACIENTE, REVISAR MEDICO, CREAR CITAS
 
         int cedula = pacienteModel.getCedula();
         PacienteModel pacienteModeli = pacienteRepository.findByCedula(cedula);
-        if(pacienteModeli != null){
-            throw new IllegalArgumentException("El numero de cedula ya existe");
+        if (pacienteModeli != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El número de cédula ya existe");
         }
-        
 
         return pacienteRepository.save(pacienteModel);
     }
+
+
+
     
     
     

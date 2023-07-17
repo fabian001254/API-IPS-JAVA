@@ -45,7 +45,7 @@ public class CitaController {
     @PostMapping
     public ResponseEntity<ApiResponse> guardarUsuario(@RequestBody CitaModel cita) {
         if (isAnyFieldEmpty(cita)) {
-            return ResponseEntity.badRequest().body(new ApiResponse("Debe completar todos los campos", null));
+            return ResponseEntity.status(422).body(new ApiResponse("Debe completar todos los campos", null));
         }
         CitaModel citaGuardada = citaService.guardarCita(cita);
         return ResponseEntity.status(201).body(new ApiResponse("Cita guardada correctamente", citaGuardada));

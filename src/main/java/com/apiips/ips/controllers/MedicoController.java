@@ -40,7 +40,7 @@ public class MedicoController {
                 medico.getCorreo(),
                 medico.getNombreEspecialidad()
             );
-            return ResponseEntity.badRequest().body(new ApiResponse("Debe completar todos los campos",medicoResponse));
+            return ResponseEntity.status(422).body(new ApiResponse("Debe completar todos los campos",medicoResponse));
         }
             MedicoModel medicoGuardado = medicoService.guardarMedico(medico);
 

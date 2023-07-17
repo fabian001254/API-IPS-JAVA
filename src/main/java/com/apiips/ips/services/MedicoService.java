@@ -11,7 +11,7 @@ import com.apiips.ips.models.EspecialidadModel;
 import com.apiips.ips.models.MedicoModel;
 import com.apiips.ips.repositories.EspecialidadRepository;
 import com.apiips.ips.repositories.MedicoRepository;
-
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
@@ -46,7 +46,7 @@ public class MedicoService {
 
         MedicoModel medicoModeli = medicoRepository.findByTarjetaProfesional(medico.getTarjetaProfesional());
         if (medicoModeli != null) {
-            throw new IllegalArgumentException("El número de tarjeta ya existe");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"El número de tarjeta ya existe");
         }
 
         String especialidadNombre = medico.getNombreEspecialidad();

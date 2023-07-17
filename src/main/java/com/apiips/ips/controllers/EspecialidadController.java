@@ -25,10 +25,10 @@ public class EspecialidadController {
     @PostMapping()
     public ResponseEntity<ApiResponse> guardarUsuario(@RequestBody EspecialidadModel especialidad){
         if (isAnyFieldEmpty(especialidad)) {
-            return ResponseEntity.badRequest().body(new ApiResponse("Debe completar todos los campos",especialidad));
+            return ResponseEntity.status(422).body(new ApiResponse("Debe completar todos los campos",especialidad));
         }
         EspecialidadModel especialidadGuardado = especialidadService.guardarEspecialidad(especialidad);
-        return ResponseEntity.ok(new ApiResponse("Especialidad guardada correctamente", especialidadGuardado));
+        return ResponseEntity.status(201).body(new ApiResponse("Especialidad guardada correctamente", especialidadGuardado));
     }
 
     private boolean isAnyFieldEmpty(EspecialidadModel especialidad) {

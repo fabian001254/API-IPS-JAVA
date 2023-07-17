@@ -30,7 +30,7 @@ public class PacienteController {
     public ResponseEntity<ApiResponse> guardarUsuario(@RequestBody PacienteModel paciente) {
         // Validación de campos vacíos
         if (isAnyFieldEmpty(paciente)) {
-            return ResponseEntity.badRequest().body(new ApiResponse("Debe completar todos los campos",paciente));
+            return ResponseEntity.status(422).body(new ApiResponse("Debe completar todos los campos",paciente));
         }
     
         PacienteModel pacienteGuardado = pacienteService.guardarPaciente(paciente);
