@@ -34,7 +34,7 @@ public class PacienteController {
         }
     
         PacienteModel pacienteGuardado = pacienteService.guardarPaciente(paciente);
-        return ResponseEntity.ok(new ApiResponse("Paciente guardado correctamente", pacienteGuardado));
+        return ResponseEntity.status(201).body(new ApiResponse("Paciente guardado correctamente", pacienteGuardado));
     }
     
     private boolean isAnyFieldEmpty(PacienteModel paciente) {

@@ -47,9 +47,8 @@ public class CitaController {
         if (isAnyFieldEmpty(cita)) {
             return ResponseEntity.badRequest().body(new ApiResponse("Debe completar todos los campos", null));
         }
-
         CitaModel citaGuardada = citaService.guardarCita(cita);
-        return ResponseEntity.ok(new ApiResponse("Cita guardada correctamente", citaGuardada));
+        return ResponseEntity.status(201).body(new ApiResponse("Cita guardada correctamente", citaGuardada));
     }
 
     private boolean isAnyFieldEmpty(CitaModel cita) {

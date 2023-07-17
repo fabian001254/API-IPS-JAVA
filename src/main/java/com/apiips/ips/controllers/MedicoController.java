@@ -52,7 +52,7 @@ public class MedicoController {
                 medicoGuardado.getCorreo(),
                 medicoGuardado.getEspecialidad().getIdEspecialidad()
             );
-            return ResponseEntity.ok(new ApiResponse("Medico guardado correctamente", medicoResponse));
+            return ResponseEntity.status(201).body(new ApiResponse("Medico guardado correctamente", medicoResponse));
     }
     
     private boolean isAnyFieldEmpty(MedicoModel medico) {
