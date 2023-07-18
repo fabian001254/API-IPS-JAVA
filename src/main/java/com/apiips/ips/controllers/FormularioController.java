@@ -1,6 +1,7 @@
 package com.apiips.ips.controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class FormularioController {
     private Resource jsonSchemaFile;
 
     @GetMapping("/{formulario}")
+    @Operation(summary = "Obtener variables del formulario por Rol")
     public ResponseEntity<JsonNode> obtenerDefinicion(@PathVariable String formulario) {
         ObjectMapper objectMapper = new ObjectMapper();
 

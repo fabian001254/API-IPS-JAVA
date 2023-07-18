@@ -1,5 +1,7 @@
 package com.apiips.ips.controllers;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
 import com.apiips.ips.models.PacienteModel;
@@ -16,17 +18,20 @@ public class PacienteController {
     PacienteSevice pacienteService;
 
     @GetMapping()
+    @Operation(summary = "Obtiene la llista de todos los pacientes")
     public List<PacienteModel> obtenerPacientes() {
         return pacienteService.obtenerPacientes();
     }
     
 
     @GetMapping(path = "/{cedula}")
+    @Operation(summary = "Obtiene un paciente pór cedula")
     public ResponseEntity<?> obtenerPacientesPorCedula(@PathVariable("cedula") int cedula){
         return pacienteService.obtenerPacientesPorCedula(cedula);
     }
 
     @PostMapping()
+    @Operation(summary = "Crea un paciente")
     public ResponseEntity<ApiResponse> guardarUsuario(@RequestBody PacienteModel paciente) {
         // Validación de campos vacíos
         if (isAnyFieldEmpty(paciente)) {
@@ -36,7 +41,8 @@ public class PacienteController {
         PacienteModel pacienteGuardado = pacienteService.guardarPaciente(paciente);
         return ResponseEntity.status(201).body(new ApiResponse("Paciente guardado correctamente", pacienteGuardado));
     }
-    
+
+    @Hidden
     private boolean isAnyFieldEmpty(PacienteModel paciente) {
         return paciente.getCedula() == 0
                 || paciente.getNombre() == null
