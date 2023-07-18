@@ -1,7 +1,10 @@
 package com.apiips.ips.controllers;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
 import java.time.LocalDate;
 
+@Hidden
 public class CitaResponse {
     private int id_Cita;
     private String Nombre_medico;

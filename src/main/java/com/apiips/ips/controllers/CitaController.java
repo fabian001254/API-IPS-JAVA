@@ -3,6 +3,8 @@ package com.apiips.ips.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ public class CitaController {
     CitaService citaService;
 
     @GetMapping
+    @Operation(summary = "Obtiene la lista de todas las citas registradas")
     public ResponseEntity<List<CitaResponse>> obtenerCitas() {
         List<CitaModel> citasResponse = citaService.obtenerCitas();
         List<CitaResponse> citas = new ArrayList<>();
@@ -43,15 +46,16 @@ public class CitaController {
     }
 
     @PostMapping
+    @Operation(summary = "Crea una nueva cita")
     public ResponseEntity<ApiResponse> guardarUsuario(@RequestBody CitaModel cita) {
         if (isAnyFieldEmpty(cita)) {
-            return ResponseEntity.badRequest().body(new ApiResponse("Debe completar todos los campos", null));
+            return ResponseEntity.status(422).body(new ApiResponse("Debe completar todos los campos", null));
         }
-
         CitaModel citaGuardada = citaService.guardarCita(cita);
-        return ResponseEntity.ok(new ApiResponse("Cita guardada correctamente", citaGuardada));
+        return ResponseEntity.status(201).body(new ApiResponse("Cita guardada correctamente", citaGuardada));
     }
 
+    @Hidden
     private boolean isAnyFieldEmpty(CitaModel cita) {
         return cita.getCedula_paciente() == 0 || cita.getTarjeta_profesional() == 0;
     }

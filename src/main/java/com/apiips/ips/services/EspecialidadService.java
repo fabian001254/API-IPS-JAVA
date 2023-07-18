@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.apiips.ips.Errors.ErrorResponse;
 import com.apiips.ips.models.EspecialidadModel;
 import com.apiips.ips.repositories.EspecialidadRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class EspecialidadService {
@@ -38,11 +39,9 @@ public class EspecialidadService {
 
         EspecialidadModel especialidadModeli = especialidadRepository.findByNombre(especialidad.getNombre().toUpperCase());
         if(especialidadModeli != null){
-            throw new IllegalArgumentException("La especialidad ya existe");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La especialidad ya existe");
         }
-
         especialidad.setNombre(especialidad.getNombre().toUpperCase());
-
         return especialidadRepository.save(especialidad);
     }
 

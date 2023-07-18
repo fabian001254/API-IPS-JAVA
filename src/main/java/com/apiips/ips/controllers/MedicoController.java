@@ -2,6 +2,8 @@ package com.apiips.ips.controllers;
 
 import java.util.ArrayList;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,7 @@ public class MedicoController {
 
 
     @PostMapping()
+    @Operation(summary = "Crea un nuevo medico")
     public ResponseEntity<ApiResponse> guardarUsuario(@RequestBody MedicoModel medico) {
         
         if (isAnyFieldEmpty(medico)) {
@@ -40,7 +43,7 @@ public class MedicoController {
                 medico.getCorreo(),
                 medico.getNombreEspecialidad()
             );
-            return ResponseEntity.badRequest().body(new ApiResponse("Debe completar todos los campos",medicoResponse));
+            return ResponseEntity.status(422).body(new ApiResponse("Debe completar todos los campos",medicoResponse));
         }
             MedicoModel medicoGuardado = medicoService.guardarMedico(medico);
 
@@ -52,9 +55,10 @@ public class MedicoController {
                 medicoGuardado.getCorreo(),
                 medicoGuardado.getEspecialidad().getIdEspecialidad()
             );
-            return ResponseEntity.ok(new ApiResponse("Medico guardado correctamente", medicoResponse));
+            return ResponseEntity.status(201).body(new ApiResponse("Medico guardado correctamente", medicoResponse));
     }
-    
+
+    @Hidden
     private boolean isAnyFieldEmpty(MedicoModel medico) {
         return medico.getTarjetaProfesional() == 0
                 || medico.getNombre() == null

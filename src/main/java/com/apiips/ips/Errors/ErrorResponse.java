@@ -3,6 +3,8 @@ package com.apiips.ips.Errors;
 public class ErrorResponse {
     private String message;
 
+
+
     public ErrorResponse(String message) {
         this.message = message;
     }
@@ -14,5 +16,8 @@ public class ErrorResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }
+
+
 
